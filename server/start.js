@@ -251,7 +251,7 @@ function socketInit (server) {
       const userObject = userObjects.filter((userObject) => {
         return userObject[data.name]
       })[0]
-console.log('INVITATION DATA', data)
+      
       const userSocketId = userObject[data.name]
 
       groupChat.to(userSocketId).emit('video_invitation', {

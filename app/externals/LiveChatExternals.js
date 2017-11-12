@@ -1,7 +1,7 @@
+// Executes when VideoChat component mounts
 import io from '../sockets'
 
 import { socket } from '../components/ChatAppVideo'
-
 const LiveChatExternals = () => {
 
     // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket
@@ -29,7 +29,7 @@ const LiveChatExternals = () => {
         websocket.push(JSON.stringify(data));
     };
 
-    // Peer connection 
+    // Peer connection (PeerConnection was added to the global window object)
     var peer = new PeerConnection(websocket);
 
 
@@ -40,7 +40,7 @@ const LiveChatExternals = () => {
         button.style.display = 'block'
         button.onclick = function() {
             button = this;
-            getUserMedia(function(stream) {
+            myGetUserMedia(function(stream) {
                 peer.addStream(stream);
                 peer.sendParticipationRequest(userid);
             });
@@ -77,7 +77,7 @@ const LiveChatExternals = () => {
 //**************************** 'START VIDEO CHAT' BUTTON *****************
     document.querySelector('#start-broadcasting').onclick = function() {
         this.disabled = true;
-        getUserMedia(function(stream) {
+        myGetUserMedia(function(stream) {
             peer.addStream(stream);
             peer.startBroadcasting();
         });
@@ -127,7 +127,7 @@ const LiveChatExternals = () => {
     window.onresize = scaleVideos;
 
     // you need to capture getUserMedia yourself!
-    function getUserMedia(callback) {
+    function myGetUserMedia(callback) {
         var hints = {
             audio: true,
             video: {
@@ -135,8 +135,9 @@ const LiveChatExternals = () => {
                 mandatory: {}
             }
         };
-    navigator.getUserMedia(hints, function(stream) {
-            var video = document.createElement('video');
+    navigator.mediaDevices.getUserMedia(hints)
+        .then(stream => {
+          var video = document.createElement('video');
             video.src = URL.createObjectURL(stream);
             video.controls = true;
             video.muted = true;
@@ -148,7 +149,9 @@ const LiveChatExternals = () => {
             });
 
             callback(stream);
-        });
+        })
+        .catch(e => console.error(e));
+    
     }
 
     (function() {

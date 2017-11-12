@@ -115,7 +115,6 @@ class ChatApp extends Component {
 			this.props.translateActionCreator(id, originalLanguage, userLanguage, text)
 		}
 
-
 	}
 
 	htmlDecode(input){
@@ -159,7 +158,8 @@ class ChatApp extends Component {
 						<ul>
 							<ReactCSSTransitionGroup
 								transitionName="fallingFadeIn"
-								transitionEnterTimeout={500}>
+								transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
 							{
 								finalTranscripts[0] && finalTranscripts.map((transcript, i) => {
 									return (

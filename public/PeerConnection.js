@@ -1,9 +1,42 @@
 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket
 
+// Legacy code.  This whole page is executed directly through script tag in index.html (before bundle.js) and adds global (window/navigator) objects and variables. 
+
+/* PeerConnection object: 
+  {
+    addStream: function(stream) {this.MediaStream = stream},
+    MediaStream: null,
+    startBroadcasting: sends userID via websockets,
+    sendParticipationRequest: (userid)
+    etc....
+  }
+  isChrome, isFirefox
+  STUN (object with stun server info)
+  TURN
+  ICEServers
+  optionalArgument
+  offerAnswerConstraint
+  getToken (random num)
+
+  Offer object (with methods: 
+    createOffer
+    setRemoteDescription
+    addIceCandidate)
+
+  Answer object (with methods:
+  createAnswer
+  addIceCandidate)
+*/
+
+
 (function () {
     // socketURL is new WebSocket('wss://pubsub.pubnub.com/' + pub + '/' + sub + '/' + channel);
     // userId = token from random generator (not hash)
+  // *************************************************************
+    // PeerConnection() is called when user clicks on 'send participation request button
+    // PeerConnection.addStream() is called when user clicks on 'connect'
     window.PeerConnection = function (socketURL, userid) {
+      debugger;
         this.userid = userid || getToken();
         this.peers = {};
 
@@ -16,6 +49,7 @@
         };
     };
 
+  // *************************************************************
     function Signaler(root, socketURL) {
         var self = this;
 
@@ -150,6 +184,7 @@
                 root.close();
         };
         
+
         function onmessage(e) {
             var message = JSON.parse(e.data);
 
@@ -205,15 +240,19 @@
                 console.log('websocket connection opened.');
             };
         }
+
         socket.onmessage = onmessage;
     }
+  
+
+   // *************************************************************
 
     var RTCPeerConnection = window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
     var RTCSessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
     var RTCIceCandidate = window.mozRTCIceCandidate || window.RTCIceCandidate;
 
-    navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-    window.URL = window.webkitURL || window.URL;
+    // navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+    // window.URL = window.webkitURL || window.URL;
 
     var isFirefox = !!navigator.mozGetUserMedia;
     var isChrome = !!navigator.webkitGetUserMedia;
@@ -262,6 +301,7 @@
     
     function onSdpError() {}
 
+  // *************************************************************
     // var offer = Offer.createOffer(config);
     // offer.setRemoteDescription(sdp);
     // offer.addIceCandidate(candidate);
@@ -299,6 +339,7 @@
         }
     };
 
+    // *************************************************************
     // var answer = Answer.createAnswer(config);
     // answer.setRemoteDescription(sdp);
     // answer.addIceCandidate(candidate);
@@ -333,6 +374,8 @@
             }));
         }
     };
+    
+    // *************************************************************
 
     function merge(mergein, mergeto) {
         for (var t in mergeto) {
@@ -340,23 +383,24 @@
         }
         return mergein;
     }
+    // *************************************************************
+
     
-    window.URL = window.webkitURL || window.URL;
-    navigator.getMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    navigator.getMedia = navigator.mediaDevices.getUserMedia
+
     navigator.getUserMedia = function(hints, onsuccess, onfailure) {
-        if(!hints) hints = {audio:true,video:true};
+        if(!hints) hints = {audio: true, video: true};
         if(!onsuccess) throw 'Second argument is mandatory. navigator.getUserMedia(hints,onsuccess,onfailure)';
         
-        navigator.getMedia(hints, _onsuccess, _onfailure);
-        
-        function _onsuccess(stream) {
-            onsuccess(stream);
-        }
-        
-        function _onfailure(e) {
+        navigator.getMedia(hints)
+          .then(stream => { 
+            onsuccess(stream) 
+          })
+          .catch(e => {
             if(onfailure) onfailure(e);
             else throw Error('getUserMedia failed: ' + JSON.stringify(e, null, '\t'));
-        }
+          });
+       
     };
     
 })();

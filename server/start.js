@@ -125,6 +125,10 @@ module.exports = app
   .get('/.well-known/acme-challenge/c4btZ9qllEgRTSECrxhvIEoVjJfVymvifqvZMO1dPy0', (req, res) => 
     res.sendFile(resolve(__dirname, '..', 'challenge.txt'))
   )
+  .get('.well-known/acme-challenge/xj9FLdYvwEyJ8iNmJYwYm9C-zhQOpIPLz3iwppoc1Ls', (req, res) => 
+    res.sendFile(resolve(__dirname, '..', 'challenge2.txt'))
+  )
+  
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html')))
@@ -165,17 +169,17 @@ function socketInit (server) {
   groupChat.on('connection', function(socket) {
 
     socket.on('join_room', function(data) {
-      console.log('data: ', data);
+      
       let room = data.room
       let id = socket.id
 
       if (!names[room]) {
         names[room] = {};
       }
-      console.log('data.userName: ', data.userName);
+      
 
       let name = data.userName && userNames.claim(data.userName, room, id) ? data.userName : userNames.getGuestName(room, id);
-      console.log('name: ', name);
+      
         
       socket.name = name;
       socket.room = room
@@ -189,7 +193,7 @@ function socketInit (server) {
       socket.to(room).broadcast.emit('user:join', {
         name: name
       });
-        console.log('name: TO BE EMITTED', name);
+        
     })
 
     socket.on('send:message', function(data) {

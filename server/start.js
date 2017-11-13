@@ -121,9 +121,9 @@ module.exports = app
 
   // Serve our api
   .use('/api', require('./api'))
-  
+
   .get('/.well-known/acme-challenge/WI2orW-toH8q2Ax06dBc73gDog2l0A3u8LyhEaLbXpM', (req, res) => 
-    res.sendFile(/.well-known/acme-challenge/WI2orW-toH8q2Ax06dBc73gDog2l0A3u8LyhEaLbXpM)
+    res.sendFile('/.well-known/acme-challenge/WI2orW-toH8q2Ax06dBc73gDog2l0A3u8LyhEaLbXpM')
   )
 
   // Send index.html for anything else.

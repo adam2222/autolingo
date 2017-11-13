@@ -123,7 +123,7 @@ module.exports = app
   .use('/api', require('./api'))
 
   .get('/.well-known/acme-challenge/c4btZ9qllEgRTSECrxhvIEoVjJfVymvifqvZMO1dPy0', (req, res) => 
-    res.sendFile(resolve(__dirname, '..', 'challenge.txt')
+    res.sendFile(resolve(__dirname, '..', 'challenge.txt'))
   )
 
   // Send index.html for anything else.

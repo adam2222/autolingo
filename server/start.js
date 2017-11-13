@@ -122,8 +122,8 @@ module.exports = app
   // Serve our api
   .use('/api', require('./api'))
 
-  .get('/.well-known/acme-challenge/WI2orW-toH8q2Ax06dBc73gDog2l0A3u8LyhEaLbXpM', (req, res) => 
-    res.sendFile('/.well-known/acme-challenge/WI2orW-toH8q2Ax06dBc73gDog2l0A3u8LyhEaLbXpM')
+  .get('/.well-known/acme-challenge/c4btZ9qllEgRTSECrxhvIEoVjJfVymvifqvZMO1dPy0', (req, res) => 
+    res.sendFile(resolve(__dirname, '..', 'challenge.txt')
   )
 
   // Send index.html for anything else.

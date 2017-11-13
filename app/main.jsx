@@ -22,6 +22,7 @@ const generateHash = () => {
       location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
   }
 }
+// hey
 
 render (
   <Provider store={store}>

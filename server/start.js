@@ -125,7 +125,7 @@ module.exports = app
   .get('/.well-known/acme-challenge/c4btZ9qllEgRTSECrxhvIEoVjJfVymvifqvZMO1dPy0', (req, res) => 
     res.sendFile(resolve(__dirname, '..', 'challenge.txt'))
   )
-  .get('/.well-known/acme-challenge/xj9FLdYvwEyJ8iNmJYwYm9C-zhQOpIPLz3iwppoc1Ls', (req, res) => 
+  .get('/.well-known/acme-challenge/iYH8oULxWXEnGD97N1IVjWovuM-XjBi1R6poHoahOQY', (req, res) => 
     res.sendFile(resolve(__dirname, '..', 'challenge2.txt'))
   )
   

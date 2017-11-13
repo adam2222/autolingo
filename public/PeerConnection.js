@@ -36,7 +36,6 @@
     // PeerConnection() is called when user clicks on 'send participation request button
     // PeerConnection.addStream() is called when user clicks on 'connect'
     window.PeerConnection = function (socketURL, userid) {
-      debugger;
         this.userid = userid || getToken();
         this.peers = {};
 

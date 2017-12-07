@@ -1,12 +1,11 @@
-// Executes when VideoChat component mounts
-import io from '../sockets'
+// LiveChatExternals is called when VideoChat component mounts
 
+import io from '../sockets'
 import { socket } from '../components/ChatAppVideo'
+
 const LiveChatExternals = () => {
 
-    // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket
-
-    var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+  var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 
     var pub = 'pub-f986077a-73bd-4c28-8e50-2e44076a84e0';
     var sub = 'sub-b8f4c07a-352e-11e2-bb9d-c7df1d04ae4a';
@@ -32,6 +31,7 @@ const LiveChatExternals = () => {
     // Peer connection (PeerConnection was added to the global window object)
     var peer = new PeerConnection(websocket);
 
+    // adding methods onto PeerConnection instance
 
     peer.onUserFound = function(userid) {
         if (document.getElementById(userid)) return;
@@ -126,7 +126,7 @@ const LiveChatExternals = () => {
 
     window.onresize = scaleVideos;
 
-    // you need to capture getUserMedia yourself!
+//******************************************************
     function myGetUserMedia(callback) {
         var hints = {
             audio: true,
@@ -151,8 +151,8 @@ const LiveChatExternals = () => {
             callback(stream);
         })
         .catch(e => console.error(e));
-    
     }
+//******************************************************
 
     (function() {
         var uniqueToken = document.getElementById('unique-token');

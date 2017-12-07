@@ -1,5 +1,3 @@
-// Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket
-
 // Legacy code.  This whole page is executed directly through script tag in index.html (before bundle.js) and adds global (window/navigator) objects and variables. 
 
 /* PeerConnection object: 

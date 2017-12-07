@@ -3,9 +3,8 @@
 import React, { Component } from 'react';
 import L from 'mapbox.js';
 import countriesLayer from '../data/world'
-import { Link } from 'react-router';
-import repositionMap from './utilities.jsx';
-import {browserHistory} from 'react-router'
+import { Link, browserHistory } from 'react-router';
+// import repositionMap from './utilities.jsx';
 
 var geojson;
 
@@ -13,24 +12,22 @@ export default class Map extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      highlightedCountry: ""
+      highlightedCountry: ''
     }
-    this.map;
+    // this.map;
     // this.repositionMap = this.repositionMap.bind(this);
     this.zoomToFeature = this.zoomToFeature.bind(this);
     this.countriesOnEachFeature = this.countriesOnEachFeature.bind(this);
     this.highlightFeature = this.highlightFeature.bind(this)
-    this.usaMarker;
-    this.chinaMarker;
-    this.franceMarker;
-    this.spainMarker;
-    this.koreaMarker;
+    // this.usaMarker;
+    // this.chinaMarker;
+    // this.franceMarker;
+    // this.spainMarker;
+    // this.koreaMarker;
   }
 
 
   componentDidMount() {
-console.log(countriesLayer);
-
     // Since we are creating a new map instance, the code below within componentDidMount can only be run once. So, the code needs to remain here, and can't be in the MapContainer file (since each change in state would re-run the code).
     L.mapbox.accessToken = 'pk.eyJ1IjoiYWRhbTIyMjIiLCJhIjoiY2l5dGJhaW96MDAwcDJ3bzM0MXk2aTB0bSJ9.kgHNRDiGEmq12toljp2-kA'
     var map = L.mapbox.map('map').setView([16.541430, 7.558594], 3);
